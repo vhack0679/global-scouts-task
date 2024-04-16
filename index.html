@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random Order Form</title>
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-4 mb-4">Student Information Form</h2>
+    <form id="studentForm" class="needs-validation" novalidate>
+        <div id="formContainer">
+          
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-4">Submit</button>
+    </form>
+
+    <div id="studentData" class="mt-4"></div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const formContainer = document.getElementById('formContainer');
+    const formFields = [
+        { label: 'Full Name:', type: 'text', id: 'fullName', name: 'fullName', required: true },
+        { label: 'Email:', type: 'email', id: 'email', name: 'email', required: true },
+        { label: 'Phone:', type: 'tel', id: 'phone', name: 'phone', required: true },
+        { label: 'Address:', type: 'textarea', id: 'address', name: 'address', required: true }
+    ];
+
+    shuffleArray(formFields);
+
+    formFields.forEach(field => {
+        const divFormGroup = document.createElement('div');
+        divFormGroup.classList.add('form-group');
+
+        const labelElement = document.createElement('label');
+        labelElement.htmlFor = field.id;
+        labelElement.textContent = field.label;
+
+        const inputElement = document.createElement(field.type === 'textarea' ? 'textarea' : 'input');
+        inputElement.type = field.type;
+        inputElement.classList.add('form-control');
+        inputElement.id = field.id;
+        inputElement.name = field.name;
+        inputElement.required = field.required;
+
+        divFormGroup.appendChild(labelElement);
+        divFormGroup.appendChild(inputElement);
+
+        formContainer.appendChild(divFormGroup);
+    });
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+});
+
+document.getElementById('studentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (document.getElementById('studentForm').checkValidity()) {
+        // Get form values
+        const fullName = document.getElementById('fullName').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const address = document.getElementById('address').value;
+
+        const student = {
+            fullName: fullName,
+            email: email,
+            phone: phone,
+            address: address
+        };
+
+        localStorage.setItem('studentInfo', JSON.stringify(student));
+
+        window.location.href = 'display.html';
+    } else {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById('studentForm').classList.add('was-validated');
+    }
+});
+</script>
+</body>
+</html>

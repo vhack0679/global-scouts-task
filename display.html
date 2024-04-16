@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Information</title>
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    #studentData {
+        max-width: 600px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+</style>
+</head>
+<body>
+<div id="studentData">
+    <script>
+        
+        const storedStudent = JSON.parse(localStorage.getItem('studentInfo'));
+
+        if (storedStudent) {
+            const studentDataDiv = document.getElementById('studentData');
+            studentDataDiv.innerHTML = `
+                <h2 class="text-center mb-4">Student Information</h2>
+                <p><strong>Name:</strong> ${storedStudent.fullName}</p>
+                <p><strong>Email:</strong> ${storedStudent.email}</p>
+                <p><strong>Phone:</strong> ${storedStudent.phone}</p>
+                <p><strong>Address:</strong> ${storedStudent.address}</p>
+            `;
+        } else {
+            
+            const studentDataDiv = document.getElementById('studentData');
+            studentDataDiv.innerHTML = '<p class="text-center">No student data found!</p>';
+        }
+    </script>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
